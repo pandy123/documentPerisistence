@@ -5,7 +5,7 @@ import { RuntimeUtil } from '../util/RuntimeUtil';
 
 export class ClassUtil {
    // 类对象集合
-   protected static _classes = new Object() as ClassMap;
+   public static _classes = new Object() as ClassMap;
 
    /**
     * 判断某个类型是否为基础数据类型。
@@ -201,10 +201,12 @@ export class ClassUtil {
       }
       // 设置父类对象
       var parentClass = null;
+      // 获得typePrototype的原型
       var parentPrototype = Object.getPrototypeOf(typePrototype);
       if (parentPrototype) {
          var superType = parentPrototype.constructor;
          if (superType != Object) {
+            // 递归将父的描述属性给子
             parentClass = this.get(superType);
          }
       }

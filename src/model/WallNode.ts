@@ -20,11 +20,11 @@ export class WallNode extends DataNode {
    public static CLASS_NAME = "FloorplanNodeEnum.Wall";
 
    /** 开始点实体 */
-   @Field('from', DataTypeEnum.Object, PointNode, null)
+   @Field('from', DataTypeEnum.Object, PointNode)
    @Persistent(ObjectIdConverter)
    public from: PointNode;
    /** 结束点实体 */
-   @Field('to', DataTypeEnum.Object, PointNode, null)
+   @Field('to', DataTypeEnum.Object, PointNode)
    @Persistent(ObjectIdConverter)
    public to: PointNode;
 

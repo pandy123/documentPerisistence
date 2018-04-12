@@ -1,12 +1,6 @@
 import { DateUtil } from './DateUtil';
 import { IntegerUtil } from './IntegerUtil';
 
-/**
- * 日期时间的工具类。
- * 
- * @author maochunyang
- * @version 1.0.1
- */
 export class DateTime {
    /** 时间 */
    public date: Date;

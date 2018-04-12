@@ -1,12 +1,7 @@
 import { StringBuffer } from './StringBuffer';
 import { StringUtil } from './StringUtil';
 
-/**
- * 浮点数管理类。
- *
- * @author maocy
- * @version 150131
- */
+
 export class FloatUtil {
    /** 字符串 */
    public static CHARS = '0123456789-.%';

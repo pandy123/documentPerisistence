@@ -27,20 +27,13 @@ function syncAnnotation(type: Function, name: string): PersistentAnnotation {
  * @param priority 优先级
  */
 export function Persistent(
-   dataConverter?: any,
+   dataConverter: any,
    priority: number = 0) {
-   // containerType?: any,
-   // invalid: boolean = true) {
    return function (target: any, name: string): void {
       var annotation = syncAnnotation(target.constructor, name);
       if (dataConverter) {
          annotation.dataConverter = dataConverter;
-         // annotation.priority = dataConverter.
       }
-      // if (containerType) {
-      //    annotation.dataContainerClass = containerType;
-      // }
-      // annotation.invalid = invalid;
       annotation.priority = priority;
    }
 }

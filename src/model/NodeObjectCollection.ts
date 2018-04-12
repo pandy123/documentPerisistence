@@ -1,12 +1,7 @@
 
 import { DataNode } from './DataNode';
 
-/**
- * 节点集合。
- * 
- * @author maocy
- * @version 170725
- */
+
 export class NodeObjectCollection<V extends DataNode>{
    /** 内容集合 */
    protected _values: Array<V>;

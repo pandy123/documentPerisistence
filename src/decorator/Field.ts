@@ -4,28 +4,12 @@ import { DataTypeEnum } from '../model/DataTypeEnum';
 
 
 export function Field(
-   dataName?: String,
-   dataCd: DataTypeEnum = DataTypeEnum.Object,
-   dataClass?: any,
-   dataDefault: any = null) {
+   dataName?: String,                           // 字段名称
+   dataCd: DataTypeEnum = DataTypeEnum.Object,  // 字段类型枚举
+   dataClass?: any) {
    return function (target: any, name: string): void {
       // 注册描述器
-      var annotation = new FieldAnnotation(name, dataName, dataCd, dataClass, dataDefault);
-      ClassUtil.registerAnnotation(target.constructor, annotation);
-   }
-}
-
-
-export function FieldArray(
-   dataName?: String,
-   dataCd: DataTypeEnum = DataTypeEnum.Object,
-   dataContainerClass?: any,
-   dataClass?: any,
-   dataDefault: any = null) {
-   return function (target: any, name: string): void {
-      // 注册描述器
-      var annotation = new FieldAnnotation(name, dataName, dataCd, dataClass, dataDefault);
-      annotation.dataContainerClass = dataContainerClass;
+      var annotation = new FieldAnnotation(name, dataName, dataCd, dataClass);
       ClassUtil.registerAnnotation(target.constructor, annotation);
    }
 }

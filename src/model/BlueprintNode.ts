@@ -14,7 +14,7 @@ export class BlueprintNode extends DataNode {
    public static CLASS_NAME = "DataNodeEnum.Blueprint";
 
    /** 激活户型实体 */
-   @Field('active_floorplan', DataTypeEnum.Object, FloorplanNode, null)
+   @Field('active_floorplan', DataTypeEnum.Object, FloorplanNode)
    @Property()
    @Persistent(ObjectIdConverter)
    public activeFloorplan: FloorplanNode;

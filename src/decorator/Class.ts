@@ -15,14 +15,13 @@ export class Class {
    public type: any;
    /** 接口集合 */
    public interfaces: Array<Function>;
-   /** 实例 */
+   /** 实例 */ // 单例的情况下，用
    public instance: any;
    /** 类描述器集合 */
    protected _classAnnotations: Types<Annotation>;
    /** 字段描述器集合 */
    protected _fieldAnnotations: Dictionary<Dictionary<Annotation>>;
-   /** 属性集合 */
-   protected _attributes: Dictionary<Annotation>;
+
 
    /**
     * 构造处理。
@@ -31,7 +30,6 @@ export class Class {
       // 设置属性
       this._classAnnotations = new Types<Annotation>();
       this._fieldAnnotations = new Dictionary<Dictionary<Annotation>>();
-      this._attributes = new Dictionary<Annotation>();
       this.interfaces = new Array<Function>();
    }
 
@@ -108,16 +106,8 @@ export class Class {
          annotations = new Dictionary<Annotation>();
          this._fieldAnnotations.set(annotationCd, annotations);
       }
-      // 检查重复
-      if (!annotation.isDuplicate()) {
-         var annotationFind = annotations.get(code);
-         if (annotationFind) {
-         }
-      }
-      // 设置内容
       annotations.set(code, annotation);
       // 设置属性
-      this._attributes.set(name, annotation);
    }
 
    /**
@@ -198,70 +188,36 @@ export class Class {
    }
 
    /**
-    * 根据属性查找描述器。
-    *
-    * @param name 名称
-    * @return 描述对象
-    */
-   public findAttribute(code: string): Annotation {
-      var attribute = this._attributes.get(code);
-      return attribute;
-   }
-
-   /**
-    * 根据属性获得描述器。
-    *
-    * @param name 名称
-    * @return 描述对象
-    */
-   public getAttribute(code: string): Annotation {
-      var attribute = this.findAttribute(code);
-      if (!attribute) {
-         //LoggerUtil.fatal(this, null, "Can't find attribute. (class={1}, code={2},)", this.shortName, code);
-      }
-      return attribute;
-   }
-
-   /**
     * 当前类接收其他类所有的描述信息。
     *
     * @param clazz 类对象
     */
    public buildParent(clazz: Class) {
       // 复制描述器
-      var classAnnotationss = clazz._fieldAnnotations;
-      var annotationsCount = classAnnotationss.count;
+      var parentAnnotationss = clazz._fieldAnnotations;
+      var annotationsCount = parentAnnotationss.count;
       for (var j = 0; j < annotationsCount; j++) {
-         var annotationsName = classAnnotationss.name(j);
-         var classAnnotations = classAnnotationss.at(j);
-         // 在自己当前对象内查找描述的类型容器
-         var annotations = this._fieldAnnotations.get(annotationsName);
-         if (!annotations) {
-            annotations = new Dictionary<Annotation>();
-            this._fieldAnnotations.set(annotationsName, annotations)
+         var annotationsName = parentAnnotationss.name(j);
+         var parentAnnotations = parentAnnotationss.at(j);
+         var childAnnotations = this._fieldAnnotations.get(annotationsName);
+
+         // 父亲中有的描述器类型，子中如果没有，则创建一个。
+         if (!childAnnotations) {
+            childAnnotations = new Dictionary<Annotation>();
+            this._fieldAnnotations.set(annotationsName, childAnnotations)
          }
+
          // 复制指定对象内的类型到自己对象内
-         var annotationCount = classAnnotations.count;
+         var annotationCount = parentAnnotations.count;
          for (var i = 0; i < annotationCount; i++) {
-            var annotationName = classAnnotations.name(i);
-            var annotation = classAnnotations.at(i);
-            // 检查是否允许继承
-            if (annotation.isInherit()) {
-               // 检查是否允许重复
-               if (!annotation.isDuplicate()) {
-                  if (annotations.contains(annotationName)) {
-                     //  throw new Fatal(this, "Duplicate annotation. (annotation={1}, {2}.{3}={4}.{5}, source={6})",
-                     //    annotationName, this.shortName, name, clazz.shortName, name, annotation.toString());
-                  }
-               }
-               // 设置内容
-               annotations.set(annotationName, annotation);
+            var annotationName = parentAnnotations.name(i);
+            var annotation = parentAnnotations.at(i);
+            if (!childAnnotations.contains(annotationName)) {  // 如果子中重新定义了父亲的字段，则，用子的描述器
+               childAnnotations.set(annotationName, annotation);
             }
          }
       }
       //..........................................................
-      // 复制属性集合
-      this._attributes.append(clazz._attributes);
    }
 
    /**

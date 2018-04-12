@@ -1,11 +1,6 @@
 import { StringUtil } from './StringUtil';
 
-/**
- * 整型工具类。
- * 
- * @author maocy
- * @version 141229
- */
+
 export class IntegerUtil {
    /** 字符集合 */
    public static CHARS: string = '0123456789-%';

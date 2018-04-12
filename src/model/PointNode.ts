@@ -1,3 +1,4 @@
+import { FloatConverter } from './../persistent/converter/FloatConverter';
 
 import { WallNode } from './WallNode';
 import { DataTypeEnum } from './DataTypeEnum';
@@ -21,24 +22,24 @@ export class PointNode {
    /** 类名称 */
    public static CLASS_NAME = 'FloorplanNodeEnum.Point';
    /** 墙体关联 */
-   @Field('parent', DataTypeEnum.Object, WallNode, null)
+   @Field('parent', DataTypeEnum.Object, WallNode)
    @Property()
    @Persistent(ObjectIdConverter)
    public parent: WallNode;
 
-   @Field('x', DataTypeEnum.Float32, Number, 0)
+   @Field('x', DataTypeEnum.Float32, Number)
    @Property()
-   @Persistent()
+   @Persistent(FloatConverter)
    public x: number;
 
-   @Field('y', DataTypeEnum.Float32, Number, 0)
+   @Field('y', DataTypeEnum.Float32, Number)
    @Property()
-   @Persistent()
+   @Persistent(FloatConverter)
    public y: number;
 
-   @Field('z', DataTypeEnum.Float32, Number, 0)
+   @Field('z', DataTypeEnum.Float32, Number)
    @Property()
-   @Persistent()
+   @Persistent(FloatConverter)
    public z: number;
 
    /**

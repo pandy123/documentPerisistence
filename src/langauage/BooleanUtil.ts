@@ -1,12 +1,6 @@
 import { AssertUtil } from "../util/AssertUtil";
 
 
-/**
- * 布尔工具类。
- * 
- * @author maocy
- * @version 141229
- */
 export class BooleanUtil {
 
    /**

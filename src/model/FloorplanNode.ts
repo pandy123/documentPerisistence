@@ -14,11 +14,11 @@ export class FloorplanNode extends DataNode {
    /** 类名称 */
    public static CLASS_NAME = "FloorplanNodeEnum.Floorplan";
 
-   @Field('walls', DataTypeEnum.Array, WallNode, null)
+   @Field('walls', DataTypeEnum.Array, WallNode)
    @Persistent(MapIdConverter)
    public walls: WallNodeMap;
    /** 房间实体集合 */
-   @Field('points', DataTypeEnum.Array, PointNode, null)
+   @Field('points', DataTypeEnum.Array, PointNode)
    @Persistent(MapIdConverter)
    public points: PointNodeMap;
    /**

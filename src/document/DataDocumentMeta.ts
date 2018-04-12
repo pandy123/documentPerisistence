@@ -11,22 +11,22 @@ import { StringConverter } from '../persistent/converter/StringConverter';
  */
 export class DataDocumentMeta {
    /** 公司 */
-   @Field('company', DataTypeEnum.String, String, null)
-   @Persistent()
+   @Field('company', DataTypeEnum.String, String)
+   @Persistent(StringConverter)
    public company: string;
    /** 版权 */
-   @Field('copyright', DataTypeEnum.String, String, null)
-   @Persistent()
+   @Field('copyright', DataTypeEnum.String, String)
+   @Persistent(StringConverter)
    public copyright: string;
 
    /** 版本 */
-   @Field('version', DataTypeEnum.String, String, null)
+   @Field('version', DataTypeEnum.String, String)
    @Persistent(new StringConverter(PersistentAccessEnum.GetSet, true))
    public version: string;
 
    /** 创建日期 */
-   @Field('create_date', DataTypeEnum.String, String, null)
-   @Persistent()
+   @Field('create_date', DataTypeEnum.String, String)
+   @Persistent(StringConverter)
    public createDate: string;
    /**
     * 构造处理。
