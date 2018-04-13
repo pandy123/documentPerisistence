@@ -3,14 +3,8 @@ import { Types } from "../langauage/Types";
 
 
 export class PersistentContext {
-   /** 配置唯一 */
-   public optionGuid: boolean;
-   /** 过滤字段集合 */
-   public filterFields: Types<string>;
    /** 实例集合 */
    public instances: any;
-   /** 保存集合 */
-   public storage: any;
 
    /**
     * 构造处理。
@@ -20,20 +14,8 @@ export class PersistentContext {
     */
    public constructor() {
       // 设置属性
-      this.optionGuid = false
-      this.filterFields = new Types<string>();
-      this.instances = new Object();
-      this.storage = new Object();
-   }
 
-   /**
-    * 判断是否为过滤字段x。
-    *
-    * @param field 字段
-    * @return 是否需要过滤
-    */
-   public isFilterField(field: string): boolean {
-      return this.filterFields.contains(field);
+      this.instances = new Object();
    }
 
 
@@ -87,24 +69,6 @@ export class PersistentContext {
       }
    }
 
-   /**
-    * 根据编号获得是否保存。
-    *
-    * @param key 编号
-    * @return 是否保存
-    */
-   public hasStore(key: string): boolean {
-      return this.storage[key];
-   }
-
-   /**
-    * 根据编号设置保存内容。
-    *
-    * @param key 编号
-    */
-   public store(key: string) {
-      this.storage[key] = true;
-   }
 
    /**
     * 释放处理。
@@ -115,7 +79,5 @@ export class PersistentContext {
       for (var key in instances) {
          delete instances[key];
       }
-      // 清空字段
-      this.filterFields.clear();
    }
 }

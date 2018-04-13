@@ -19,20 +19,8 @@ export class ContainerConverter extends Converter {
    public load(factory: PersistentFactory, context: PersistentContext, item: any, config: any, annotation: PersistentAnnotation) {
       // 获得数据
       var values = this.getDataValue(annotation, config);
-      // 检查合并
-      if (values === undefined) {
-         if (factory.optionMerge) {
-            return;
-         } else {
-            values = annotation.dataDefault;
-         }
-      }
-      // 开始更新
-      if (factory.optionUpdated && item.beginUpdate) {
-         item.beginUpdate();
-      }
       // 获得描述器集合
-      var annotations = factory.findAnnotations(item);
+      var annotations = factory.findPeistenceAnnotations(item);
       if (annotations) {
          var count = annotations.count;
          for (var i = 0; i < count; i++) {
@@ -50,10 +38,7 @@ export class ContainerConverter extends Converter {
       if (item.loadConfig) {
          item.loadConfig(context, values);
       }
-      // 结束更新
-      if (factory.optionUpdated && item.endUpdate) {
-         item.endUpdate(false);
-      }
+
    }
 
    /**
@@ -67,7 +52,7 @@ export class ContainerConverter extends Converter {
     */
    public save(factory: PersistentFactory, context: PersistentContext, item: any, config: any, annotation: PersistentAnnotation) {
       // 根据描述器存储内容
-      var annotations = factory.findAnnotations(item);
+      var annotations = factory.findPeistenceAnnotations(item);
       if (annotations) {
          var count = annotations.count;
          for (var i = 0; i < count; i++) {
@@ -98,7 +83,7 @@ export class ContainerConverter extends Converter {
     */
    public copy(factory: PersistentFactory, context: PersistentContext, source: any, target: any, annotation: PersistentAnnotation) {
       // 根据描述器存储内容
-      var annotations = factory.findAnnotations(source);
+      var annotations = factory.findPeistenceAnnotations(source);
       if (annotations) {
          var count = annotations.count;
          for (var i = 0; i < count; i++) {

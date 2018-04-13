@@ -32,14 +32,6 @@ export class ObjectIdConverter extends FieldConverter {
    public load(factory: PersistentFactory, context: PersistentContext, item: any, config: any, annotation: PersistentAnnotation) {
       // 获得数据
       var value = this.getDataValue(annotation, config);
-      // 检查合并
-      if (value === undefined) {
-         if (factory.optionMerge) {
-            return;
-         } else {
-            value = annotation.dataDefault;
-         }
-      }
       // 加载数据
       var dataName = annotation.dataName;
       if (value != null) {

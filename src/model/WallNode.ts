@@ -4,6 +4,8 @@ import { DataTypeEnum } from './DataTypeEnum';
 import { ObjectIdConverter } from '../persistent/converter/ObjectIdConverter';
 import { Persistent } from '../persistent/Persistent';
 import { Field } from '../decorator/Field';
+import { RotationNode } from './RotationNode';
+import { ObjectConverter } from '../persistent/converter/ObjectConverter';
 
 
 /**
@@ -28,6 +30,11 @@ export class WallNode extends DataNode {
    @Persistent(ObjectIdConverter)
    public to: PointNode;
 
+   /** 结束点实体 */
+   @Field('ratation', DataTypeEnum.Object, RotationNode)
+   @Persistent(ObjectConverter)
+   public ratation: RotationNode
+
    /**
     * 构造处理。
     *
@@ -36,6 +43,6 @@ export class WallNode extends DataNode {
     */
    public constructor() {
       super();
-
+      this.ratation = new RotationNode();
    }
 }

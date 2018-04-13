@@ -36,14 +36,6 @@ export class MapConverter extends FieldConverter {
    public load(factory: PersistentFactory, context: PersistentContext, item: any, config: any, annotation: PersistentAnnotation) {
       // 获得数据
       var values = this.getDataValue(annotation, config);
-      // 检查合并
-      if (values === undefined) {
-         if (factory.optionMerge) {
-            return;
-         } else {
-            values = annotation.dataDefault;
-         }
-      }
       // 获得对象
       var name = annotation.name;
       var dataClass = annotation.dataClass;
@@ -59,7 +51,7 @@ export class MapConverter extends FieldConverter {
             if (typeof value == 'object') {
                var className = value[factory.fieldClassName];
                if (className) {
-                  data = factory.create(context, value);
+                  // data = factory.create(context, value);
                } else if (dataClass) {
                   data = new (dataClass as any)();
                   //factory.loadInstance(context, data, value);

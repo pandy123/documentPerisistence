@@ -56,4 +56,11 @@ export class DataNode extends Node {
       this.id = ++DataNode.IdCounter;
       this.guid = RuntimeUtil.makeUuid();
    }
+
+   public addChild(node: DataNode) {
+      if (!this.childNodes) {
+         this.childNodes = new Array<Node>();
+      }
+      this.childNodes.push(node);
+   }
 }

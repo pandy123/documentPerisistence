@@ -3,10 +3,14 @@ import { DataNode } from './../model/DataNode';
 import { DataDocumentMeta } from './DataDocumentMeta';
 import { PersistentFactory } from '../persistent/PersistentFactory';
 import { BlueprintNode } from '../model/BlueprintNode';
+import { WallNode } from '../model/WallNode';
+import { PointNode } from '../model/PointNode';
+import { RotationNode } from '../model/RotationNode';
 
 /**
  * 数据文档。
  */
+// document中创建的所有对象都会被持久化，反持久化时也会被反回来
 export class DataDocument {
    /** 描述信息 */
    public meta: DataDocumentMeta;
@@ -16,6 +20,8 @@ export class DataDocument {
    public blueprint: BlueprintNode;
    /*** 持久化工厂 */
    public factory: PersistentFactory;
+   /*** 持久化环境 */
+   public context: PersistentContext;
 
    /**
     * 构造处理。
@@ -24,8 +30,13 @@ export class DataDocument {
       // 设置属性
       this.meta = new DataDocumentMeta();
       this.contents = new Object();
-      this.blueprint = new BlueprintNode();
-      this.factory = new PersistentFactory();
+      this.context = new PersistentContext();
+      this.factory = new PersistentFactory(this.context);
+      this.factory.registerClass(BlueprintNode);
+      this.factory.registerClass(WallNode);
+      this.factory.registerClass(PointNode);
+      this.factory.registerClass(RotationNode);
+      this.blueprint = this.createContent(BlueprintNode);
    }
 
    /** 
@@ -59,20 +70,16 @@ export class DataDocument {
     * @param jconfig 信息
     * @param options 配置
     */
-   public loadJson(jconfig: any, options?: any, context?: any) {
+   public loadJson(jconfig: any) {
       var factory = this.factory;
-      // 创建环境
-      var context = context || new PersistentContext();
-      if (options) {
-         context.optionGuid = options.create;
-      }
       // 加载信息
       var jmeta = jconfig.meta;
       this.meta.loadJson(jmeta);
       // 加载产品信息
       var factory = this.factory;
       // 创建环境
-      var context = context || new PersistentContext();
+      this.context.instances = new Object();
+      var context = this.context;
       // 加载实体集合
       var jcontents = jconfig.contents;
       if (jcontents) {
@@ -99,8 +106,7 @@ export class DataDocument {
       var jcontents = jconfig.contents = new Array<any>();
       for (var guid in contents) {
          var content = contents[guid];
-         var jcontent = new Object() as any;
-         factory.saveInstance(context, content, jcontent);
+         var jcontent = factory.saveInstance(content);
          jcontents.push(jcontent);
       }
       var blueprint = this.blueprint;

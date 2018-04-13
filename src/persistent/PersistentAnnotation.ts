@@ -22,7 +22,7 @@ export class PersistentAnnotation extends Annotation {
    /** 数据类 */
    public dataClass: Function;
    /** 数据转换器 */
-   public dataConverter: Function | Converter;
+   public dataConverter: Converter;
    /** 转换器 */
    public converter: Converter;
    /** 优先级 */

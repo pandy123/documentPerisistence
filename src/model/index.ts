@@ -6,6 +6,7 @@ import { DataTypeEnum } from "./DataTypeEnum";
 import { PointNode } from './PointNode';
 import { WallNode } from './WallNode';
 import { Node } from './Node';
+import { RotationNode } from './RotationNode';
 
 export { Node as Node }
 export { DataNode as DataNode }
@@ -15,6 +16,7 @@ export { NodeObjectCollection as NodeObjectCollection }
 export { PointNode as PointNode }
 export { WallNode as WallNode }
 export { BlueprintNode as BlueprintNode }
+export { RotationNode as RotationNode }
 
 
 

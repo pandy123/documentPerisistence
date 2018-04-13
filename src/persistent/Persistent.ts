@@ -15,6 +15,7 @@ function syncAnnotation(type: Function, name: string): PersistentAnnotation {
    var annotation = clazz.findClassAnnotation(AnnotationEnum.Persistent, name) as PersistentAnnotation;
    if (!annotation) {
       annotation = new PersistentAnnotation(name);
+      annotation.dataName = name;
       clazz.register(annotation);
    }
    return annotation;

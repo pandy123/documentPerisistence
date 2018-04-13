@@ -23,14 +23,6 @@ export class ArrayIdGuidConverter extends FieldConverter {
    public load(factory: PersistentFactory, context: PersistentContext, item: any, config: any, annotation: PersistentAnnotation) {
       // 获得数据
       var values = this.getDataValue(annotation, config);
-      // 检查合并
-      if (values === undefined) {
-         if (factory.optionMerge) {
-            return;
-         } else {
-            values = annotation.dataDefault;
-         }
-      }
       // 加载数据
       var dataName = annotation.dataName;
       if (values != null) {

@@ -21,28 +21,20 @@ export class ArrayIdConverter extends FieldConverter {
     * @param config 设置
     * @param annotation 描述器
     */
-   public load(factory: PersistentFactory, context: PersistentContext, item: any, config: any, annotation: PersistentAnnotation) {
+   public load(factory: PersistentFactory, context: PersistentContext, node: any, config: any, annotation: PersistentAnnotation) {
       // 获得数据
       var values = this.getDataValue(annotation, config);
-      // 检查合并
-      if (values === undefined) {
-         if (factory.optionMerge) {
-            return;
-         } else {
-            values = annotation.dataDefault;
-         }
-      }
       // 加载数据
       var name = annotation.name;
       var dataName = annotation.dataName;
       var containerClass = annotation.dataContainerClass;
       if (values != null) {
-         var data = item[name];
+         var data = node[name];
          if (data) {
          } else if (containerClass) {
-            data = item[name] = new (containerClass as any)();
+            data = node[name] = new (containerClass as any)();
          } else {
-            data = item[name] = new Array<any>();
+            data = node[name] = new Array<any>();
          }
          // 保存数据
          var count = values.length;
